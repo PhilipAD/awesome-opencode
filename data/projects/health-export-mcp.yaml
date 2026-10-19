@@ -1,0 +1,35 @@
+name: MetricBridge (Apple Health MCP)
+repo: https://github.com/PhilipAD/health-export-mcp
+tagline: Read-only Apple Health MCP server with 190 metrics, on-device, no account.
+description: A local, read-only MCP server that lets opencode query Apple Health metrics from your own export file. Add one entry under mcp in opencode.json and the agent gets 16 tools and 22 prompts for trends, comparisons, and summaries across 190 metrics. The server makes zero runtime network calls, needs no account, and never uploads your rows. Works alongside the MetricBridge iOS app or any existing Apple Health export.
+tags:
+  - mcp
+  - apple-health
+  - health
+  - privacy
+  - local-first
+  - metrics
+homepage: https://www.healthexport.dev/blog/connect-apple-health-to-opencode-mcp
+scope:
+  - global
+  - project
+installation: |
+  Add the server under `mcp` in `opencode.json`:
+
+  ```json
+  {
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+      "health-export": {
+        "type": "local",
+        "command": ["npx", "-y", "health-export-mcp"],
+        "enabled": true,
+        "environment": {
+          "HEALTH_DATA_DIR": "/absolute/path/to/your/export"
+        }
+      }
+    }
+  }
+  ```
+
+  Run `opencode mcp list` to confirm it connected. The tools register as `health_export_*`.
